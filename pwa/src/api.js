@@ -1,0 +1,48 @@
+import axios from 'axios';
+
+// Prosty generator fallbackowy by nie trzeba byo instalowac 'uuid' (ktorego nie installowalismy)
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function getClientId() {
+    let clientId = localStorage.getItem('clientId');
+    if (!clientId) {
+        clientId = generateUUID();
+        localStorage.setItem('clientId', clientId);
+    }
+    return clientId;
+}
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000/api'
+});
+
+// Dodaje UUID klienta do każdego zapytania
+api.interceptors.request.use(config => {
+  config.headers['Client-ID'] = getClientId();
+  return config;
+});
+
+export const getFavorites = async () => {
+  const res = await api.get('/favorites');
+  return res.data;
+};
+
+export const addFavorite = async (city, lat, lon) => {
+  const res = await api.post('/favorites', { city, lat, lon });
+  return res.data;
+};
+
+export const removeFavorite = async (id) => {
+  await api.delete(`/favorites/${id}`);
+};
+
+export const getWeather = async (lat, lon) => {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&timezone=auto`;
+  const res = await axios.get(url);
+  return res.data;
+};
