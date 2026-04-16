@@ -40,7 +40,7 @@ app.delete('/api/favorites/:id', requireClientId, (req, res) => {
     });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Serwer backendowy działa na porcie ${PORT} (Bez warstwy autoryzacyjnej)`);
 });
