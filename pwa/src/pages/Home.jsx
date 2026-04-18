@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getWeather } from '../api';
+import { getWeather, getCityNameFromCoords } from '../api';
 import WeatherCard from '../components/WeatherCard';
 import { FiSearch, FiMapPin } from 'react-icons/fi';
 
@@ -32,11 +32,15 @@ function Home({ isAuthenticated }) {
   const useGeolocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        async position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const cityName = await getCityNameFromCoords(lat, lon);
+          
           setCoords({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-            name: 'Z geolokalizacji'
+            lat,
+            lon,
+            name: cityName
           });
         },
         err => setError('Odblokuj dostęp do lokalizacji by otrzymać precyzyjną prognozę.')

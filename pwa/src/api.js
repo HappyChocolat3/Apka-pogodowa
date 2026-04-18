@@ -46,3 +46,19 @@ export const getWeather = async (lat, lon) => {
   const res = await axios.get(url);
   return res.data;
 };
+
+export const getCityNameFromCoords = async (lat, lon) => {
+  try {
+    const res = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`, {
+      headers: {
+        'Accept-Language': 'pl'
+      }
+    });
+    if (res.data && res.data.address) {
+      return res.data.address.city || res.data.address.town || res.data.address.village || 'Twoja lokalizacja';
+    }
+  } catch (error) {
+    console.error('Błąd reverse geocodingu', error);
+  }
+  return 'Z geolokalizacji';
+};
