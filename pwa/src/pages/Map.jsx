@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
-import { getWeather } from '../api';
+import { getWeather, getCityNameFromCoords } from '../api';
 import WeatherCard from '../components/WeatherCard';
 
 // Fix dla ikon w vite zeby markery leaflet.js ladowaly swoje zrodla prawidlowo
@@ -27,12 +27,17 @@ function MapView() {
   const [loading, setLoading] = useState(false);
   const [clickedPos, setClickedPos] = useState(null);
 
+  const [clickedPosName, setClickedPosName] = useState("");
+
   const fetchPointWeather = async (lat, lon) => {
     setLoading(true);
     setClickedPos({ lat, lon });
+    setClickedPosName("");
     try {
       const data = await getWeather(lat, lon);
       setWeatherData(data);
+      const name = await getCityNameFromCoords(lat, lon);
+      setClickedPosName(name);
     } catch(err) {
       alert("Błąd integracji z Open-Meteo API. Sprawdź sieć lokalną.");
     } finally {
@@ -70,13 +75,15 @@ function MapView() {
               </div>
             ) : (
               weatherData && (
-                <WeatherCard 
-                  data={weatherData} 
-                  isFavoriteMode={false} 
-                  city={`Miejscowość (${clickedPos.lat.toFixed(2)}, ${clickedPos.lon.toFixed(2)})`}
-                  lat={clickedPos.lat}
-                  lon={clickedPos.lon}
-                />
+                  <div style={{ background: '#0f172a', borderRadius: '16px' }}>
+                    <WeatherCard 
+                      data={weatherData} 
+                      isFavoriteMode={false} 
+                      city={clickedPosName || `Wyszukiwanie lokalizacji...`}
+                      lat={clickedPos.lat}
+                      lon={clickedPos.lon}
+                    />
+                  </div>
               )
             )}
             <button className="btn" onClick={() => setClickedPos(null)} style={{ width: '100%', marginTop: '0.5rem', background: 'var(--danger)' }}>
