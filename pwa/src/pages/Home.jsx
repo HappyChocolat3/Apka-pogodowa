@@ -3,7 +3,7 @@ import { getWeather, getCityNameFromCoords } from '../api';
 import WeatherCard from '../components/WeatherCard';
 import { FiSearch, FiMapPin } from 'react-icons/fi';
 
-function Home({ isAuthenticated }) {
+function Home() {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -43,7 +43,7 @@ function Home({ isAuthenticated }) {
             name: cityName
           });
         },
-        err => setError('Odblokuj dostęp do lokalizacji by otrzymać precyzyjną prognozę.')
+        () => setError('Odblokuj dostęp do lokalizacji by otrzymać precyzyjną prognozę.')
       );
     }
   };
@@ -80,10 +80,8 @@ function Home({ isAuthenticated }) {
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           <WeatherCard 
             data={weather} 
-            isFavoriteMode={false} 
             city={searchQuery || coords.name} 
-            lat={coords.lat} 
-            lon={coords.lon} 
+            showForecast={true}
           />
         </div>
       )}

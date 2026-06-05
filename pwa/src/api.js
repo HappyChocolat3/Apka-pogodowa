@@ -42,7 +42,7 @@ export const removeFavorite = async (id) => {
 };
 
 export const getWeather = async (lat, lon) => {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode,uv_index&daily=temperature_2m_max,temperature_2m_min,weathercode,uv_index_max&timezone=auto`;
   const res = await axios.get(url);
   return res.data;
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { getWeather, getCityNameFromCoords } from '../api';
@@ -38,7 +38,7 @@ function MapView() {
       setWeatherData(data);
       const name = await getCityNameFromCoords(lat, lon);
       setClickedPosName(name);
-    } catch(err) {
+    } catch {
       alert("Błąd integracji z Open-Meteo API. Sprawdź sieć lokalną.");
     } finally {
       setLoading(false);
@@ -78,10 +78,8 @@ function MapView() {
                   <div style={{ background: '#0f172a', borderRadius: '16px' }}>
                     <WeatherCard 
                       data={weatherData} 
-                      isFavoriteMode={false} 
                       city={clickedPosName || `Wyszukiwanie lokalizacji...`}
-                      lat={clickedPos.lat}
-                      lon={clickedPos.lon}
+                      showForecast={true}
                     />
                   </div>
               )

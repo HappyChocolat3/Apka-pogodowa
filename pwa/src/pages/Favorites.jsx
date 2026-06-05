@@ -47,7 +47,7 @@ function Favorites() {
         <div className="weather-grid">
           {favorites.length === 0 ? (
             <div className="glass-panel" style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
-              <p>Nie masz żadnych zapisanych lokacji. Spróbuj dodać wschodzące słońce z pulpitu!</p>
+              <p>Nie masz żadnych zapisanych lokacji.</p>
             </div>
           ) : (
             favorites.map(fav => (
@@ -63,10 +63,7 @@ function Favorites() {
                 <div style={{ pointerEvents: 'none' }}>
                   <WeatherCard 
                     data={weatherData[fav.id]} 
-                    isFavoriteMode={true} 
                     city={fav.city} 
-                    lat={fav.lat} 
-                    lon={fav.lon} 
                   />
                 </div>
               </div>
