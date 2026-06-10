@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { FiSun, FiCloud, FiCloudRain, FiCloudSnow, FiCloudLightning } from 'react-icons/fi';
 
 function WeatherCard({ data, city, showForecast }) {
+  const [forecastDays, setForecastDays] = useState(5);
+
   if (!data) return null;
 
   const current = data.current_weather;
@@ -86,9 +89,45 @@ function WeatherCard({ data, city, showForecast }) {
 
       {showForecast && data.daily && data.daily.time && (
         <div className="forecast-section">
-          <h3 className="forecast-title">Prognoza na 7 dni</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h3 className="forecast-title" style={{ margin: 0 }}>Prognoza</h3>
+            <div style={{ display: 'flex', gap: '0.25rem', background: 'rgba(255, 255, 255, 0.05)', padding: '0.25rem', borderRadius: '20px', border: '1px solid var(--glass-border)' }}>
+              <button 
+                onClick={() => setForecastDays(5)} 
+                style={{
+                  border: 'none',
+                  background: forecastDays === 5 ? 'var(--accent)' : 'transparent',
+                  color: forecastDays === 5 ? '#fff' : 'var(--text-secondary)',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '16px',
+                  fontSize: '0.8rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                5 dni
+              </button>
+              <button 
+                onClick={() => setForecastDays(7)} 
+                style={{
+                  border: 'none',
+                  background: forecastDays === 7 ? 'var(--accent)' : 'transparent',
+                  color: forecastDays === 7 ? '#fff' : 'var(--text-secondary)',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '16px',
+                  fontSize: '0.8rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                7 dni
+              </button>
+            </div>
+          </div>
           <div className="forecast-list">
-            {data.daily.time.map((dayTime, index) => {
+            {data.daily.time.slice(0, forecastDays).map((dayTime, index) => {
               const maxTemp = data.daily.temperature_2m_max[index];
               const minTemp = data.daily.temperature_2m_min[index];
               const dailyWcc = data.daily.weathercode[index];
