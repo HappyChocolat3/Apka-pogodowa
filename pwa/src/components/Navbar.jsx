@@ -11,7 +11,6 @@ function Navbar() {
       <div className="nav-links">
         <Link to="/" className="nav-link">Pulpit</Link>
         <Link to="/map" className="nav-link">Mapa Pogodowa</Link>
-        <Link to="/favorites" className="nav-link">Ulubione</Link>
       </div>
     </nav>
   );
