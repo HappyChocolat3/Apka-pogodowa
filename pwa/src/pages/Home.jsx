@@ -61,7 +61,7 @@ function Home() {
             type="text" 
             className="input-field" 
             style={{ paddingLeft: '2.5rem' }} 
-            placeholder="Szukaj miasta (Wkrótce - wpisz cokolwiek by zapisać jako lokalizację testową)" 
+            placeholder="Szukaj miasta" 
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
