@@ -52,7 +52,6 @@ function Home() {
     <div>
       <div className="weather-header">
         <h1>Pogoda na żywo</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Korzystając z API Open-Meteo ze wsparciem PWA Cache</p>
       </div>
 
       <div style={{ display: 'flex', gap: '1rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
