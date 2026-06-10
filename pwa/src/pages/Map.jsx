@@ -49,7 +49,7 @@ function MapView() {
     <div>
       <div className="weather-header">
         <h1>Interaktywna Mapa</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Kliknij w dowolne miejsce na kuli ziemskiej by sprawdzić aktualną pogodę.</p>
+        <p style={{ color: 'var(--text-secondary)' }}>Kliknij w dowolne miejsce na mapie, żeby sprawdzić pogodę</p>
       </div>
       
       <div style={{ position: 'relative', height: '600px', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--glass-border)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)' }}>
